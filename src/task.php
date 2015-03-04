@@ -22,5 +22,9 @@ class Task
     static function getAll(){
         return $_SESSION["list_description"];
     }
+
+    static function clearAll(){
+        $_SESSION['list_description']=array();
+    }
 }
 ?>

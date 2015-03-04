@@ -35,6 +35,11 @@ $app->get("/",function(){
                     <button type='submit'>Add task</button>
                 </form>" ;
 
+    $output.= "<form action='/delete' method='post'>
+
+                <button type='submit'>Clear All</button>
+               </form>" ;
+
 
     return $output;
 });
@@ -60,6 +65,17 @@ $app->post("/tasks", function(){
 
 
 });
+
+$app->post("/delete", function(){
+    Task::clearAll();
+    return
+      "<h1> Your List is clear</h1><br/><a href='/'>Go Home to enter new list</a>";
+
+
+});
+
+
+
 
     return $app;
 
