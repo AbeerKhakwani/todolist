@@ -15,12 +15,21 @@
 
 
 
-    $app->get("/",function(){
+$app->get("/",function(){
+
     $output="";
-    foreach(Task::getAll() as $task){
-                    $output.="<p>".$task->getDescription()."</p>";
-                }
-    $output.= "<form action='/task' method='post'>
+
+    $all_tasks=Task::getAll();
+
+    if(!empty($all_tasks))
+    {
+        foreach(Task::getAll() as $task)
+        {
+            $output.="<p>".$task->getDescription()."</p>";
+        }
+    }
+
+    $output.= "<form action='/tasks' method='post'>
                     <label for='description'>Task Description</label>
                     <input id='description' name='description' type='text'>
                     <button type='submit'>Add task</button>
@@ -28,7 +37,29 @@
 
 
     return $output;
-    });
+});
+
+$app->post("/tasks", function(){
+
+
+    if(!empty($_POST["description"]))
+    {
+        $task = new Task($_POST["description"]);
+        $task->save();
+        return
+          "<h1> You created a task!</h1>
+          <p>". $task->getDescription()."</p>
+          <p><a href='/'>View your list</a></p>";
+    }
+    else{
+    return "error " . "<a href='/'>please enter an item</a>";
+    }
+
+
+
+
+
+});
 
     return $app;
 
